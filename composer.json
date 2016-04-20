@@ -1,0 +1,19 @@
+{
+    "name": "hugolambrinidis/ticketproject",
+    "description": "rattrapage LAMP",
+    "license": "hugo Lambrinidis",
+    "authors": [
+        {
+            "name": "hugo Lambrinidis",
+            "email": "hlambrinidis@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "doctrine/orm": "^2.5",
+        "twbs/bootstrap": "^3.3",
+        "components/jquery": "^2.2",
+        "symfony/yaml": "^3.0",
+        "twig/twig": "^1.24"
+    }
+}
