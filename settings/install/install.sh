@@ -8,6 +8,7 @@ if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ];then
 else
     composer install
     printf "export MYSQL_USER=$1\nexport MYSQL_PASSWORD=$2\nexport MYSQL_PORT=$3" > .env
+    chmod 755 ./.env
     ./.env
     cat ./settings/db/projectTicket_db.sql |  mysql -u $1 -p$2
     if [ $? -eq 0 ]
