@@ -10,10 +10,10 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "doctrine/orm": "^2.5",
         "twbs/bootstrap": "^3.3",
         "components/jquery": "^2.2",
-        "symfony/yaml": "^3.0",
-        "twig/twig": "^1.24"
+        "twig/twig": "^1.24",
+        "propel/propel1": "~1.6"
     }
 }
+gi
