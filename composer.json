@@ -13,7 +13,13 @@
         "twbs/bootstrap": "^3.3",
         "components/jquery": "^2.2",
         "twig/twig": "^1.24",
-        "propel/propel1": "~1.6"
+        "propel/propel": "~2.0@dev",
+        "monolog/monolog": "1.19.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "classmap": ["generated-classes/"],
+            "controller\\\\": "src/controller/"
+        }
     }
 }
-gi
