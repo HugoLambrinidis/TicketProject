@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="src/assets/css/adminOpenedTicket.css">
+<div id="AdminOpenedTicket">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            {% if AdminOpenedTicket.error %}
+                <div id="noTicketError" class="bg-warning text-uppercase text-danger text-center">{{ AdminOpenedTicket.error|raw }}</div>
+            {% endif %}
+            {% if AdminOpenedTicket.error is null %}
+                <table class="table table-hover table-bordered">
+                    <tr>
+                        <th class="text-center text-primary text-capitalize">Titre</th>
+                        <th class="text-center text-primary text-capitalize">Date</th>
+                        <th class="text-center text-primary text-capitalize">User</th>
+                        <th class="text-capitalize text-primary text-center">Admin</th>
+                    </tr>
+                    {% for i in AdminOpenedTicket.element %}
+                        <tr class="ticketOpened" data-id="{{ i.ticket.ticket_id }}">
+                            <td class="text-center">{{ i.ticket.ticket_titre }}</td>
+                            <td class="text-center">{{ i.ticket.ticket_date }}</td>
+                            <td class="text-center">{{ i.user.user_username }}</td>
+                            <td class="text-center">
+                                <select name="admin" id="admin">
+                                    <option value="">Admins</option>
+                                    {% for j in AdminOpenedTicket.admin %}
+                                    <option value="{{ j.admin_id }}">{{ j.admin_username }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script src="src/assets/js/adminOpenedTicket.js"></script>

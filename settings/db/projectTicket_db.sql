@@ -8,19 +8,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema TicketProject
+-- Schema lambrinidis
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema TicketProject
+-- Schema lambrinidis
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `TicketProject` DEFAULT CHARACTER SET utf8 ;
-USE `TicketProject` ;
+CREATE SCHEMA IF NOT EXISTS `lambrinidis` DEFAULT CHARACTER SET utf8 ;
+USE `lambrinidis` ;
 
 -- -----------------------------------------------------
--- Table `TicketProject`.`Users_type`
+-- Table `lambrinidis`.`Users_type`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `TicketProject`.`Users_type` (
+CREATE TABLE IF NOT EXISTS `lambrinidis`.`Users_type` (
   `user_type_id` INT NOT NULL AUTO_INCREMENT,
   `user_type_type` VARCHAR(45) NULL,
   PRIMARY KEY (`user_type_id`))
@@ -28,9 +28,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `TicketProject`.`Users`
+-- Table `lambrinidis`.`Users`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `TicketProject`.`Users` (
+CREATE TABLE IF NOT EXISTS `lambrinidis`.`Users` (
   `user_id` INT NOT NULL AUTO_INCREMENT,
   `user_name` VARCHAR(45) NULL,
   `user_lastname` VARCHAR(45) NULL,
@@ -41,73 +41,75 @@ CREATE TABLE IF NOT EXISTS `TicketProject`.`Users` (
   INDEX `fk_Users_Users_type1_idx` (`user_user_type` ASC),
   CONSTRAINT `fk_Users_Users_type1`
     FOREIGN KEY (`user_user_type`)
-    REFERENCES `TicketProject`.`Users_type` (`user_type_id`)
+    REFERENCES `lambrinidis`.`Users_type` (`user_type_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `TicketProject`.`Status`
+-- Table `lambrinidis`.`Tickets`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `TicketProject`.`Status` (
-  `status_id` INT NOT NULL AUTO_INCREMENT,
-  `status_type` VARCHAR(45) NULL,
-  PRIMARY KEY (`status_id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `TicketProject`.`Messages`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `TicketProject`.`Messages` (
-  `message_id` INT NOT NULL AUTO_INCREMENT,
-  `message_date` TIMESTAMP NULL,
-  `message_text` TEXT NULL,
-  `message_user_id` INT NOT NULL,
-  PRIMARY KEY (`message_id`),
-  INDEX `fk_Messages_Users1_idx` (`message_user_id` ASC),
-  CONSTRAINT `fk_Messages_Users1`
-    FOREIGN KEY (`message_user_id`)
-    REFERENCES `TicketProject`.`Users` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `TicketProject`.`Tickets`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `TicketProject`.`Tickets` (
+CREATE TABLE IF NOT EXISTS `lambrinidis`.`Tickets` (
   `ticket_id` INT NOT NULL AUTO_INCREMENT,
   `ticket_titre` VARCHAR(45) NULL,
   `ticket_user_id` INT NULL,
   `ticket_admin_id` INT NULL,
-  `ticket_status_id` INT NOT NULL,
-  `ticket_message_id` INT NOT NULL,
+  `ticket_date` TIMESTAMP NOT NULL,
   PRIMARY KEY (`ticket_id`),
   INDEX `fk_Tickets_Users1_idx` (`ticket_user_id` ASC),
   INDEX `fk_Tickets_Users2_idx` (`ticket_admin_id` ASC),
-  INDEX `fk_Tickets_Status1_idx` (`ticket_status_id` ASC),
-  INDEX `fk_Tickets_Messages1_idx` (`ticket_message_id` ASC),
   CONSTRAINT `fk_Tickets_Users1`
     FOREIGN KEY (`ticket_user_id`)
-    REFERENCES `TicketProject`.`Users` (`user_id`)
+    REFERENCES `lambrinidis`.`Users` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Tickets_Users2`
     FOREIGN KEY (`ticket_admin_id`)
-    REFERENCES `TicketProject`.`Users` (`user_id`)
+    REFERENCES `lambrinidis`.`Users` (`user_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `lambrinidis`.`Status`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `lambrinidis`.`Status` (
+  `status_id` INT NOT NULL AUTO_INCREMENT,
+  `status_type` VARCHAR(45) NULL,
+  `status_ticket_id` INT NOT NULL,
+  `status_date` TIMESTAMP NULL,
+  PRIMARY KEY (`status_id`),
+  INDEX `fk_Status_Tickets1_idx` (`status_ticket_id` ASC),
+  CONSTRAINT `fk_Status_Tickets1`
+    FOREIGN KEY (`status_ticket_id`)
+    REFERENCES `lambrinidis`.`Tickets` (`ticket_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `lambrinidis`.`Messages`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `lambrinidis`.`Messages` (
+  `message_id` INT NOT NULL AUTO_INCREMENT,
+  `message_date` TIMESTAMP NULL,
+  `message_text` TEXT NULL,
+  `message_user_id` INT NOT NULL,
+  `message_ticket_id` INT NOT NULL,
+  PRIMARY KEY (`message_id`),
+  INDEX `fk_Messages_Users1_idx` (`message_user_id` ASC),
+  INDEX `fk_Messages_Tickets1_idx` (`message_ticket_id` ASC),
+  CONSTRAINT `fk_Messages_Users1`
+    FOREIGN KEY (`message_user_id`)
+    REFERENCES `lambrinidis`.`Users` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Tickets_Status1`
-    FOREIGN KEY (`ticket_status_id`)
-    REFERENCES `TicketProject`.`Status` (`status_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Tickets_Messages1`
-    FOREIGN KEY (`ticket_message_id`)
-    REFERENCES `TicketProject`.`Messages` (`message_id`)
+  CONSTRAINT `fk_Messages_Tickets1`
+    FOREIGN KEY (`message_ticket_id`)
+    REFERENCES `lambrinidis`.`Tickets` (`ticket_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

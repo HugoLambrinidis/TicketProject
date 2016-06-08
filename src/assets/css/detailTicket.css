@@ -1,0 +1,22 @@
+#detailTicketError {
+    margin-top: 50px;
+    border: 1px solid red;
+    height: 50px;
+    line-height: 50px;
+}
+
+#detailTicket {
+    margin-top: 50px;
+}
+
+#detailTicket tr {
+    cursor: default;
+}
+
+.tool-btn {
+    width: 150px;
+}
+
+#tooltips-buttons {
+    margin-top: 40px;
+}

@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="src/assets/css/progressTicket.css">
+<div id="progressTicket">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            {% if progressTicket.error %}
+                <div id="noTicketError" class="bg-warning text-uppercase text-danger text-center">{{ progressTicket.error|raw }}</div>
+            {% endif %}
+            {% if progressTicket.error is null %}
+                <table class="table table-hover table-bordered">
+                    <tr>
+                        <th class="text-center text-primary text-capitalize">Titre</th>
+                        <th class="text-center text-primary text-capitalize">Date</th>
+                    </tr>
+                    {% for i in progressTicket %}
+                        <tr class="ticketprogress" data-id="{{ i.ticket.ticketId }}">
+                            <td class="text-center">{{ i.ticket.ticketTitle }}</td>
+                            <td class="text-center">{{ i.ticket.ticketDate }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<script src="src/assets/js/progressTicket.js"></script>

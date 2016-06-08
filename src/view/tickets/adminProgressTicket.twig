@@ -1,0 +1,31 @@
+<link rel="stylesheet" href="src/assets/css/adminProgressTicket.css">
+<div id="AdminProgressTicket">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            {% if AdminProgressTicket.error %}
+                <div id="noTicketError" class="bg-warning text-uppercase text-danger text-center">{{ AdminProgressTicket.error|raw }}</div>
+            {% endif %}
+            {% if AdminProgressTicket.error is null %}
+                <table class="table table-hover table-bordered">
+                    <tr>
+                        <th class="text-center text-primary text-capitalize">Titre</th>
+                        <th class="text-center text-primary text-capitalize">Date</th>
+                        <th class="text-center text-primary text-capitalize">User</th>
+                        <th class="text-capitalize text-primary text-center">Admin</th>
+                    </tr>
+                    {% for i in AdminProgressTicket.element %}
+                        <tr class="ticketProgress" data-id="{{ i.ticket.ticket_id }}">
+                            <td class="text-center">{{ i.ticket.ticket_titre }}</td>
+                            <td class="text-center">{{ i.ticket.ticket_date }}</td>
+                            <td class="text-center">{{ i.user.user_username }}</td>
+                            <td class="text-center">{{ i.admin.admin_username }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script src="src/assets/js/adminProgressTicket.js"></script>

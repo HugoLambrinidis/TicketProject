@@ -1,0 +1,90 @@
+<link rel="stylesheet" href="src/assets/css/home.css">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Connection
+                    </div>
+                    <div class="panel-body">
+                        <form id="connection" method="post" action="./login">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" name="Username" class="form-control" id="username" placeholder="Username">
+                            </div>
+                            <div class="form-group">
+                                <label for="Password">Password</label>
+                                <input type="password" name="Password" class="form-control" id="Password" placeholder="Password">
+                            </div>
+                            <button type="submit" class="center-block btn btn-primary">Submit</button>
+                            {% if login %}
+                            <div class="text-center text-danger">{{ login|raw }}</div>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Inscription
+                    </div>
+                    <div class="panel-body">
+                        <form id="inscription" method="post" action="./inscription">
+                            <div class="form-group{% if inscription.usernameError %} has-error{% endif %}">
+                                <label for="username">Username</label>
+                                <input type="text" name="Username" class="form-control" id="username" placeholder="Username">
+                                {% if inscription.usernameError %}
+                                <div class="text-center text-danger">{{ inscription.usernameError|raw }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group{% if inscription.passwordError %} has-error{% endif %}">
+                                <label for="Password">Password</label>
+                                <input type="password" name="Password" class="form-control" id="Password" placeholder="Password">
+                                {% if inscription.passwordError %}
+                                <div class="text-danger text-center">{{ inscription.passwordError|raw }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group{% if inscription.nameError %} has-error{% endif %}">
+                                <label for="Name">Name</label>
+                                <input type="text" name="Name" class="form-control" id="Name" placeholder="Name">
+                                {% if inscription.nameError %}
+                                <div class="text-center text-danger">{{ inscription.nameError|raw }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group{% if inscription.lastnameError %} has-error{% endif %}">
+                                <label for="LastName">Last Name</label>
+                                <input type="text" class="form-control" name="Lastname" id="LastName" placeholder="LastName">
+                                {% if inscription.lastnameError %}
+                                <div class="text-center text-danger">{{ inscription.lastnameError|raw }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="UserType" id="UserType_user" value="1" checked>
+                                        User
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="UserType" id="UserType_admin" value="2">
+                                        Admin
+                                    </label>
+                                </div>
+                            </div>
+                            <button type="submit" class="center-block btn btn-primary">Submit</button>
+                            {% if inscription.user_exist %}
+                            <div class="text-center text-danger">{{ inscription.user_exist|raw }}</div>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="src/assets/js/home.js"></script>
+</body>
+</html>

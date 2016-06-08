@@ -17,9 +17,9 @@
         "monolog/monolog": "1.19.*"
     },
     "autoload": {
+        "classmap": ["generated-reversed-database/generated-classes/"],
         "psr-4": {
-            "classmap": ["generated-classes/"],
-            "controller\\\\": "src/controller/"
+            "Controller\\": "src/controller/"
         }
     }
 }

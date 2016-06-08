@@ -1,0 +1,116 @@
+<link rel="stylesheet" href="src/assets/css/detailTicket.css">
+<div id="ticketDetail">
+    <div class="container">
+        <div id="tooltips-buttons" class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-2">
+                {% if not ticketDetail.last %}
+                    {% if ticketDetail.current_status == "ouvert" %}
+                        <button id="backToOpenedTicket" class="tool-btn btn center-block btn-primary">Back</button>
+                    {% endif %}
+                    {% if ticketDetail.current_status == 'progress' %}
+                        <button id="backToProgressTicket" class="tool-btn btn center-block btn-primary">Back</button>
+                    {% endif %}
+                    {% if ticketDetail.current_status == "closed" %}
+                        <button id="backToClosedTicket" class="tool-btn btn center-block btn-primary">Back</button>
+                    {% endif %}
+                {% else %}
+                    <button id="backToTicketByAdmin" class="tool-btn btn center-block btn-primary">Back</button>
+                {% endif %}
+            </div>
+            {% if  ticketDetail.current_status != "closed" %}
+                <div class="col-md-2">
+                    <button id="newMessageForTicket" class="tool-btn btn center-block btn-primary" data-toggle="modal" data-target="#messageModal">Nouveau Message</button>
+                </div>
+                <div class="col-md-2">
+                    <button id="refreshTicketDetail" data-id="{{ ticketDetail.ticket.ticket_id }}" class="tool-btn btn center-block btn-primary">Actualiser</button>
+                </div>
+                <div class="col-md-2">
+                    <button id="closeTicket" data-toggle="modal" data-target="#closeTicketModal" class="tool-btn btn center-block btn-primary">Fermer Ticket</button>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+
+    {% if ticketDetail.element|length < 2 %}
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div id="detailTicketError" class="bg-warning text-danger text-center text-uppercase">Pas de status ni de messages, une erreur est survenue</div>
+            </div>
+        </div>
+    {% endif %}
+    {% if ticketDetail.element|length > 1 %}
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <table id="detailTicket" class="table table-bordered">
+                    <tr data-id="{{ ticketDetail.ticket.ticket_id }}">
+                        {% for key, i in ticketDetail.ticket %}
+                            <th class="text-center"><span class="text-center text-uppercase text-primary">{{ key }}</span>  : <span class="text-info">{{ i }}</span></th>
+                        {% endfor %}
+                    </tr>
+                    {% for i in ticketDetail.element %}
+                        {% if i.type == "message" %}
+                            <tr class="info text-center" data-id="{{ i.message_id }}">
+                                <td>{{ i.date }}</td>
+                                <td colspan="6">{{ i.message_text }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if i.type == "status" %}
+                            <tr class="warning text-center" data-id="{{ i.status_id }}">
+                                <td>{{ i.date }}</td>
+                                <td colspan="6" class="text-uppercase
+                    {% if i.status_type == "ouvert" %} text-success {% endif %}
+                    {% if i.status_type == "progress" %} text-info {% endif %}
+                    {% if i.status_type == "closed" %} text-danger {% endif %}
+                    ">{{ i.status_type }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<!-- message Modal -->
+<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Nouveau Message</h4>
+            </div>
+            <form id="newMessageForm" method="post">
+                <div class="modal-body">
+                    <label for="newMessageContent">Message</label>
+                    <textarea id="newMessageContent" placeholder="Message..." name="message_text" class="form-control" rows="15"></textarea>
+                </div>
+                <input type="hidden" name="message_ticket_id" value="{{ ticketDetail.ticket.ticket_id }}">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" id="sendMessage" class="btn btn-primary">Envoyer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- close ticket Modal -->
+<div class="modal fade" id="closeTicketModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Voulez vous vraiment fermer le ticket ?</h4>
+            </div>
+            <div class="modal-body">
+                <button data-id="{{ ticketDetail.ticket.ticket_id }}" id="confirmClosingTicket" class="btn btn-danger">Oui</button>
+                <button data-dismiss="modal" class="btn btn-default">Non</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="src/assets/js/adminDetailTicket.js"></script>

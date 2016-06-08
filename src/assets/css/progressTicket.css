@@ -1,0 +1,14 @@
+#progressTicket table tr {
+    cursor: pointer;
+}
+
+#progressTicket table {
+    margin-top: 10%;
+}
+
+#noTicketError {
+    margin-top: 10%;
+    height: 40px;
+    line-height: 40px;
+    border: 1px solid red;
+}

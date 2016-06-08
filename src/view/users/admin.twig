@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="src/assets/css/admin.css">
+<div class="vertical-offset">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" id="user_tab" role="tablist">
+        <li role="presentation" class="active"><a href="#ActiveTicket" id="adminProgressTicket" aria-controls="cours" role="tab" data-toggle="tab">Tickets en cours</a></li>
+        <li role="presentation"><a href="#OpenTicket" id="AdminOpenedTicket" class="user_ticket_action" aria-controls="ouverts" role="tab" data-toggle="tab">Tickets ouverts</a></li>
+        <li role="presentation"><a href="#CloseTicket" class="user_ticket_action" id="adminClosedTicket" aria-controls="fermes" role="tab" data-toggle="tab">Tickets Fermés</a></li>
+        <li role="presentation"><a href="#YoursTickets" id="ticketByAdmin" class="user_ticket_action" aria-controls="assignes" role="tab" data-toggle="tab">Vos Tickets</a></li>
+        <a id="logout" href="logout" role="tab">Logout</a>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="ActiveTicket"> .. </div>
+        <div role="tabpanel" class="tab-pane" id="OpenTicket"> .. </div>
+        <div role="tabpanel" class="tab-pane" id="CloseTicket"> .. </div>
+        <div role="tabpanel" class="tab-pane" id="YoursTickets"> .. </div>
+    </div>
+</div>
+<script src="src/assets/js/admin.js"></script>
+</body>
